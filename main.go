@@ -32,8 +32,8 @@ func pageHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/static", serveStatic)
-	http.HandleFunc("/", serveDynamic)
-	http.HandleFunc("/error", serveError)
+	rtr := mux.NewRouter()
+	rtr.HandleFunc("/pages/{id:[0-9]+}", pageHandler)
+	http.Handle("/", rtr)
 	http.ListenAndServe(Port, nil)
 }
