@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/gorilla/mux"
 	"net/http"
 	"time"
 )
@@ -21,6 +22,13 @@ func serveStatic(w http.ResponseWriter, r *http.Request) {
 
 func serveError(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("There's no way I'll work!")
+}
+
+func pageHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	pageId := vars["id"]
+	fileName := "files/" + pageId + ".html"
+	http.ServeFile(w, r, fileName)
 }
 
 func main() {
